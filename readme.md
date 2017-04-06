@@ -100,11 +100,11 @@ new GeneratorDataTableReport<>(listOfData,
 										.generateReport();
 ```
 
-## Overwriting the layout of report
+# Overwriting the layout of report
 
-# Overwriting the styles
+## Overwriting the styles
 
-## Implement GetStyles
+### Implement GetStyles
 
 ```
 public class GetStylesMyImpl implements GetStyles {
@@ -129,7 +129,7 @@ public class GetStylesMyImpl implements GetStyles {
 }
 ```
 
-## If you want to overwrite only some methods, and then extend GetStylesSimple
+### If you want to overwrite only some methods, and then extend GetStylesSimple
 
 ```
 public class GetStylesMyImpl extends GetStylesSimple {
@@ -144,9 +144,9 @@ public class GetStylesMyImpl extends GetStylesSimple {
 }
 ```
 
-# Overwriting Layout
+## Overwriting Layout
 
-## Implement GetInfoLayout
+### Implement GetInfoLayout
 
 ```
 public class GetInfoLayoutMyImpl implements GetInfoLayout {
@@ -199,7 +199,7 @@ public class GetInfoLayoutMyImpl implements GetInfoLayout {
 }
 ```
 
-## If you want to overwrite only some methods, and then extend GetInfoLayoutSimple
+### If you want to overwrite only some methods, and then extend GetInfoLayoutSimple
 
 ```
 public class GetInfoLayoutMyImpl extends GetInfoLayoutSimple {
@@ -216,9 +216,9 @@ public class GetInfoLayoutMyImpl extends GetInfoLayoutSimple {
 }
 ```
 
-# Finally, create InfoReport
+## Finally, create InfoReport
 
-## If you overwrite Styles and Layout, and then implement InfoReport
+### If you overwrite Styles and Layout, and then implement InfoReport
 
 ```
 public class InfoReportMyImpl implements InfoReport {
@@ -255,7 +255,7 @@ public class InfoReportMyImpl implements InfoReport {
 }
 ```
 
-## If you overwrite only one, or Styles, or Layout, and then extend InfoReportSimple
+### If you overwrite only one, or Styles, or Layout, and then extend InfoReportSimple
 
 ```
 public final class InfoReportMyImpl extends InfoReportSimple {
