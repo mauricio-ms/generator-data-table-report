@@ -71,9 +71,9 @@ public class User {
 
 * The class should have getter's
 
-** The ColumnReport annotation defines that the field or method in which it is to be used will be a column in the report
+* The ColumnReport annotation defines that the field or method in which it is to be used will be a column in the report
 
-** Params of ColumnReport annotation
+* Params of ColumnReport annotation
 1.  label: Defines the header name, if omitted, the field name or method name will be used, capitalizing the first letter and adding a blank space between others already capitelized
 2.  mask: Permit to define a mask for fields as CEP, CPF, CNPJ, PHONE and so on ... Sould be used in the format ###.###.###-## by example, where each # will be replaced by the value of the field, and the other characters, other than # are retained
 3. value: Permit to define that a value belonging to an object will be displayed as a column, by example:
