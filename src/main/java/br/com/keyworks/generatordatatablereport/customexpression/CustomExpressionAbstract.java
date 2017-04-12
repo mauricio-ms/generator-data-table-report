@@ -32,7 +32,7 @@ public abstract class CustomExpressionAbstract implements CustomExpression {
 	}
 
 	/**
-	 * Retorna a property do campo que estã sendo avaliado
+	 * Retorna a property do campo que está sendo avaliado
 	 * 
 	 * Para pegar o valor do campo, na implementação do 
 	 * {@link #evaluate(java.util.Map, java.util.Map, java.util.Map)}

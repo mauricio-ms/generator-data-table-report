@@ -39,13 +39,13 @@ public class AddColumn {
 		Objects.requireNonNull(dataColumn, "dataColumn não deve ser null");
 		this.fastReportBuilder = fastReportBuilder;
 		this.dataColumn = dataColumn;
-		styleBuilder = createStyleBuilder();
+		styleBuilder = getStyleBuilder();
 		builder = createBuilder();
 		makeConfigurations();
 	}
 
-	private StyleBuilder createStyleBuilder() {
-		return new StyleBuilder(true).setHorizontalAlign(HorizontalAlign.CENTER)
+	protected StyleBuilder getStyleBuilder() {
+		return new StyleBuilder(true).setHorizontalAlign(HorizontalAlign.LEFT)
 						.setVerticalAlign(VerticalAlign.MIDDLE).setPadding(5)
 						.setStretching(Stretching.RELATIVE_TO_TALLEST_OBJECT)
 						.setStretchWithOverflow(true);
@@ -55,7 +55,7 @@ public class AddColumn {
 		return ColumnBuilder.getNew().setTitle(dataColumn.getTitle())
 						.setColumnProperty(dataColumn.getProperty(),
 										dataColumn.getClassOfProperty())
-						.setStyle(styleBuilder.build());
+						.setStyle(getStyleBuilder().build());
 	}
 
 	private void makeConfigurations() {
@@ -74,13 +74,11 @@ public class AddColumn {
 	}
 
 	public void addColumn() {
-
 		final AbstractColumn abstractColumn = builder
 						.setCustomExpression(new CustomExpressionDefault(
 										dataColumn.getProperty(),
 										dataColumn.getColumnReport().whenNoData()))
 						.build();
-
 		fastReportBuilder.addColumn(abstractColumn);
 	}
 

@@ -20,23 +20,18 @@ import br.com.keyworks.generatordatatablereport.contracts.GetStyles;
  */
 public class GetStylesSimple implements GetStyles {
 
-	private final Style styleTitleAndSubtitle;
-
-	public GetStylesSimple() {
-		this.styleTitleAndSubtitle = new StyleBuilder(true)
-						.setFont(Font.ARIAL_MEDIUM_BOLD)
-						.setHorizontalAlign(HorizontalAlign.RIGHT)
-						.setVerticalAlign(VerticalAlign.TOP).setPaddingTop(0).build();
-	}
-
 	@Override
 	public Style getStyleTitle() {
-		return styleTitleAndSubtitle;
+		return new StyleBuilder(true).setFont(Font.ARIAL_BIG_BOLD)
+						.setHorizontalAlign(HorizontalAlign.LEFT)
+						.setVerticalAlign(VerticalAlign.MIDDLE).build();
 	}
 
 	@Override
 	public Style getStyleSubtitle() {
-		return styleTitleAndSubtitle;
+		return new StyleBuilder(true).setFont(Font.ARIAL_MEDIUM_BOLD)
+						.setHorizontalAlign(HorizontalAlign.LEFT)
+						.setVerticalAlign(VerticalAlign.MIDDLE).build();
 	}
 
 	@Override

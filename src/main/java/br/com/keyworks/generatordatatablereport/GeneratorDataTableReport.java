@@ -8,12 +8,15 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import ar.com.fdvs.dj.core.DynamicJasperHelper;
 import ar.com.fdvs.dj.core.layout.ClassicLayoutManager;
+import ar.com.fdvs.dj.domain.AutoText;
 import ar.com.fdvs.dj.domain.DynamicReport;
 import ar.com.fdvs.dj.domain.builders.FastReportBuilder;
 import ar.com.fdvs.dj.domain.constants.ImageScaleMode;
 import ar.com.fdvs.dj.domain.constants.Page;
 import br.com.keyworks.generatordatatablereport.addcolumn.AddColumnFactory;
 import br.com.keyworks.generatordatatablereport.annotations.ColumnReport;
+import br.com.keyworks.generatordatatablereport.contracts.GetInfoLayout;
+import br.com.keyworks.generatordatatablereport.contracts.GetStyles;
 import br.com.keyworks.generatordatatablereport.contracts.InfoReport;
 import br.com.keyworks.generatordatatablereport.implementations.GetDataColumnsImpl;
 import br.com.keyworks.generatordatatablereport.layout.WhenNoData;
@@ -131,19 +134,25 @@ public final class GeneratorDataTableReport<T> {
 
 	private void configureStyleHeader() {
 
-		fastReportBuilder.setTitleStyle(infoReport.getGetStyles().getStyleTitle())
-						.setSubtitleStyle(infoReport.getGetStyles().getStyleSubtitle())
-						.setTitle(infoReport.getGetInfoLayout().getTextTitle())
-						.setSubtitle(infoReport.getGetInfoLayout().getTextSubtitle())
-						.setBottomMargin(infoReport.getGetInfoLayout().getBottomMargin());
+		final GetStyles getStyles = infoReport.getGetStyles();
+		final GetInfoLayout getInfoLayout = infoReport.getGetInfoLayout();
 
-		infoReport.getGetInfoLayout().getImageBannerToHeader().ifPresent(
+		fastReportBuilder.setTitle(getInfoLayout.getTextTitle())
+						.setTitleStyle(getStyles.getStyleTitle())
+						.setSubtitle(getInfoLayout.getTextSubtitle())
+						.setSubtitleStyle(getStyles.getStyleSubtitle())
+						.setBottomMargin(getInfoLayout.getBottomMargin());
+
+		fastReportBuilder.addAutoText(AutoText.AUTOTEXT_PAGE_X_SLASH_Y,
+						AutoText.POSITION_FOOTER, AutoText.ALIGNMENT_RIGHT);
+
+		getInfoLayout.getImageBannerToHeader().ifPresent(
 						imageBannerToHeader -> fastReportBuilder.addFirstPageImageBanner(
 										imageBannerToHeader.getPath(),
 										imageBannerToHeader.getWidth(),
 										imageBannerToHeader.getHeight(),
 										imageBannerToHeader.getAlignment().getValue(),
-										ImageScaleMode.FILL));
+										ImageScaleMode.REAL_SIZE));
 	}
 
 	private void configureStyleWhenNoData() {
