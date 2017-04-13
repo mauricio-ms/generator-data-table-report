@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.function.Consumer;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 import ar.com.fdvs.dj.core.DynamicJasperHelper;
 import ar.com.fdvs.dj.core.layout.ClassicLayoutManager;
@@ -26,6 +25,8 @@ import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperExportManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
+import net.sf.jasperreports.engine.export.JRXlsExporter;
+import net.sf.jasperreports.export.SimpleExporterInput;
 import net.sf.jasperreports.view.JasperViewer;
 
 /**
@@ -80,7 +81,7 @@ public final class GeneratorDataTableReport<T> {
 	 * @since 6 de jan de 2017
 	 */
 	public Optional<byte[]> generateReport() {
-		return generateReportInBytes(dynamicReport);
+		return generateReportInBytes();
 	}
 
 	/**
@@ -104,26 +105,48 @@ public final class GeneratorDataTableReport<T> {
 			JasperViewer.viewReport(jasperPrint);
 
 		} catch (JRException e) {
-			LOGGER.logp(Level.WARNING, "GeneratorDataTableReport", "openReport",
-							"More details in stack trace", e);
+			LOGGER.warning(() -> "openReport(): " + e);
 		}
 	}
 
-	private Optional<byte[]> generateReportInBytes(final DynamicReport dynamicReport) {
+	private Optional<byte[]> generateReportInBytes() {
+		final Optional<JasperPrint> jasperPrintOp = getJasperPrint();
+		try {
+			return jasperPrintOp.isPresent()
+							? Optional.of(JasperExportManager
+											.exportReportToPdf(jasperPrintOp.get()))
+							: Optional.empty();
+		} catch (JRException e) {
+			LOGGER.warning(() -> "generateReportInBytes(): " + e);
+		}
+		return Optional.empty();
+	}
+
+	private Optional<JasperPrint> getJasperPrint() {
 
 		final JRDataSource dataSource = new JRBeanCollectionDataSource(data);
 
 		try {
-			final JasperPrint jasperPrint = DynamicJasperHelper.generateJasperPrint(
-							dynamicReport, new ClassicLayoutManager(), dataSource);
-
-			return Optional.of(JasperExportManager.exportReportToPdf(jasperPrint));
+			return Optional.of(DynamicJasperHelper.generateJasperPrint(dynamicReport,
+							new ClassicLayoutManager(), dataSource));
 		} catch (JRException e) {
-			LOGGER.logp(Level.WARNING, "GeneratorDataTableReport",
-							"generateReportInBytes", "More details in stack trace", e);
+			LOGGER.warning(() -> "getJasperPrint(): " + e);
 		}
 
 		return Optional.empty();
+	}
+
+	public Optional<JRXlsExporter> getJrxlsExporter() {
+		final Optional<JasperPrint> jasperPrintOp = getJasperPrint();
+		return jasperPrintOp.isPresent()
+						? Optional.of(getJrxlsExporter(jasperPrintOp.get()))
+						: Optional.empty();
+	}
+
+	private JRXlsExporter getJrxlsExporter(final JasperPrint jasperPrint) {
+		final JRXlsExporter jrXlsExporter = new JRXlsExporter();
+		jrXlsExporter.setExporterInput(new SimpleExporterInput(jasperPrint));
+		return jrXlsExporter;
 	}
 
 	private void configureStyles() {
