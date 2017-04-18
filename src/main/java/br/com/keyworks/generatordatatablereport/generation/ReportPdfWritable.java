@@ -5,11 +5,15 @@ import java.io.OutputStream;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.logging.Logger;
 import javax.servlet.http.HttpServletResponse;
 import br.com.keyworks.generatordatatablereport.GeneratorDataTableReport;
 import br.com.keyworks.generatordatatablereport.contracts.InfoReport;
 
 public final class ReportPdfWritable<T> implements ReportWritable {
+
+	private static final Logger LOGGER = Logger
+					.getLogger(ReportPdfWritable.class.getName());
 
 	private final InfoReport infoReport;
 
@@ -40,12 +44,16 @@ public final class ReportPdfWritable<T> implements ReportWritable {
 	@Override
 	public void writeReport(final HttpServletResponse response) throws IOException {
 
+		LOGGER.info(() -> "writeReport PDF");
+
 		final Optional<byte[]> jrxlsExporterOp = new GeneratorDataTableReport<>(
 						reportData, infoReport).generateReport();
 
 		if( jrxlsExporterOp.isPresent() ) {
+			LOGGER.info(() -> "Report PDF generated");
 			final OutputStream outputStream = response.getOutputStream();
 			outputStream.write(jrxlsExporterOp.get());
+			LOGGER.info(() -> "Report PDF writed to Stream");
 		}
 	}
 }

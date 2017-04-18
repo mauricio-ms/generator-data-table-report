@@ -49,10 +49,13 @@ public final class ReportXlsWritable<T> implements ReportWritable {
 	@Override
 	public void writeReport(final HttpServletResponse response) {
 
+		LOGGER.info(() -> "writeReport XLS");
+
 		final Optional<JRXlsExporter> jrxlsExporterOp = new GeneratorDataTableReport<>(
 						reportData, infoReport).getJrxlsExporter();
 
 		if( jrxlsExporterOp.isPresent() ) {
+			LOGGER.info(() -> "Report XLS generated");
 			final JRXlsExporter jrXlsExporter = jrxlsExporterOp.get();
 			jrXlsExporter.setExporterOutput(
 							HttpServletResponseOututStreamExporter.of(response));
@@ -61,6 +64,7 @@ public final class ReportXlsWritable<T> implements ReportWritable {
 			} catch (JRException e) {
 				LOGGER.warning(() -> "writeReport(): " + e);
 			}
+			LOGGER.info(() -> "Report XLS writed to Stream");
 		}
 	}
 }
