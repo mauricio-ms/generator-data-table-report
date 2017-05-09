@@ -1,4 +1,4 @@
-package br.com.keyworks.generatordatatablereport.test;
+package br.com.keyworks.generatordatatablereport.test.datatable;
 
 public class Endereco {
 

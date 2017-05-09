@@ -33,10 +33,7 @@ public final class AddColumnForCustomExpressionsRegistered extends AddColumn {
 	}
 
 	@Override
-	public void addColumn() {
-		final AbstractColumn abstractColumn = getBuilder()
-						.setCustomExpression(customExpressionAbstract).build();
-
-		getFastReportBuilder().addColumn(abstractColumn);
+	public AbstractColumn getColumn() {
+		return getBuilder().setCustomExpression(customExpressionAbstract).build();
 	}
 }

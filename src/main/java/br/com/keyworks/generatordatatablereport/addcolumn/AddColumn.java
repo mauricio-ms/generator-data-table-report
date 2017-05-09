@@ -4,12 +4,16 @@ import java.util.Objects;
 import ar.com.fdvs.dj.domain.builders.ColumnBuilder;
 import ar.com.fdvs.dj.domain.builders.FastReportBuilder;
 import ar.com.fdvs.dj.domain.builders.StyleBuilder;
+import ar.com.fdvs.dj.domain.constants.Font;
+import ar.com.fdvs.dj.domain.constants.GroupLayout;
 import ar.com.fdvs.dj.domain.constants.HorizontalAlign;
 import ar.com.fdvs.dj.domain.constants.Stretching;
 import ar.com.fdvs.dj.domain.constants.VerticalAlign;
 import ar.com.fdvs.dj.domain.entities.columns.AbstractColumn;
+import br.com.keyworks.generatordatatablereport.annotations.ColumnReport;
 import br.com.keyworks.generatordatatablereport.customexpression.CustomExpressionDefault;
 import br.com.keyworks.generatordatatablereport.model.DataColumn;
+import br.com.keyworks.generatordatatablereport.styles.StyleHeaderFactory;
 
 /**
  * Classe para adicionar uma coluna
@@ -46,7 +50,8 @@ public class AddColumn {
 
 	protected StyleBuilder getStyleBuilder() {
 		return new StyleBuilder(true).setHorizontalAlign(HorizontalAlign.LEFT)
-						.setVerticalAlign(VerticalAlign.MIDDLE).setPadding(5)
+						.setFont(Font.ARIAL_MEDIUM).setVerticalAlign(VerticalAlign.MIDDLE)
+						.setPadding(5)
 						.setStretching(Stretching.RELATIVE_TO_TALLEST_OBJECT)
 						.setStretchWithOverflow(true);
 	}
@@ -74,12 +79,28 @@ public class AddColumn {
 	}
 
 	public void addColumn() {
-		final AbstractColumn abstractColumn = builder
-						.setCustomExpression(new CustomExpressionDefault(
-										dataColumn.getProperty(),
+		final AbstractColumn abstractColumn = getColumn();
+		abstractColumn.setHeaderStyle(StyleHeaderFactory.get());
+		fastReportBuilder.addColumn(abstractColumn);
+		addGroupIfNecessary(abstractColumn);
+	}
+
+	public AbstractColumn getColumn() {
+		return builder.setCustomExpression(
+						new CustomExpressionDefault(dataColumn.getProperty(),
 										dataColumn.getColumnReport().whenNoData()))
 						.build();
-		fastReportBuilder.addColumn(abstractColumn);
+	}
+
+	public void addGroupIfNecessary(final AbstractColumn abstractColumn) {
+		final ColumnReport columnReport = dataColumn.getColumnReport();
+		if( columnReport.group() ) {
+			final int indexLastColumnAdded = fastReportBuilder.getColumns().size();
+			fastReportBuilder.addGroups(indexLastColumnAdded);
+			fastReportBuilder.setGroupLayout(indexLastColumnAdded,
+							GroupLayout.VALUE_IN_HEADER);
+			abstractColumn.getStyle().getFont().setBold(true);
+		}
 	}
 
 	public FastReportBuilder getFastReportBuilder() {

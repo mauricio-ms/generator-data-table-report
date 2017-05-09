@@ -29,16 +29,12 @@ public final class AddColumnForFieldsWithMask extends AddColumn {
 	}
 
 	@Override
-	public void addColumn() {
-
+	public AbstractColumn getColumn() {
 		final DataColumn dataColumn = getDataColumn();
-
-		final AbstractColumn abstractColumn = getBuilder().setCustomExpression(
+		return getBuilder().setCustomExpression(
 						new CustomExpressionForApplyMasks(dataColumn.getProperty(),
 										getDataColumn().getColumnReport().whenNoData(),
 										dataColumn.getColumnReport().mask()))
 						.build();
-
-		getFastReportBuilder().addColumn(abstractColumn);
 	}
 }

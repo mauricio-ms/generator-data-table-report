@@ -36,7 +36,6 @@ public final class DataColumn implements Comparable<DataColumn> {
 		Objects.requireNonNull(title, "title não deve ser null");
 		Objects.requireNonNull(property, "property não deve ser null");
 		Objects.requireNonNull(columnReport, "columnReport não deve ser null");
-
 		this.title = title;
 		this.property = property;
 		this.classOfProperty = classOfProperty;

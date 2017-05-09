@@ -27,13 +27,11 @@ public final class AddColumnForLocalDateTime extends AddColumn {
 	}
 
 	@Override
-	public void addColumn() {
-		final AbstractColumn abstractColumn = getBuilder()
+	public AbstractColumn getColumn() {
+		return getBuilder()
 						.setCustomExpression(new CustomExpressionForLocalDateTime(
 										getDataColumn().getProperty(),
 										getDataColumn().getColumnReport().whenNoData()))
 						.build();
-
-		getFastReportBuilder().addColumn(abstractColumn);
 	}
 }

@@ -77,6 +77,13 @@ public @interface ColumnReport {
 	boolean html() default false;
 
 	/**
+	 * Define se a coluna deve ser de agrupamento,
+	 * se for 'true', o relatório será gerado com
+	 * um agrupamento em relação a coluna específica
+	 */
+	boolean group() default false;
+
+	/**
 	 * Define várias {@code @ColumnReport}
 	 */
 	@Target(value = { ElementType.FIELD, ElementType.METHOD })

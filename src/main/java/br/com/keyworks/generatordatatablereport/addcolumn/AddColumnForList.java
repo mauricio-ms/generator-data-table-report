@@ -27,14 +27,11 @@ public final class AddColumnForList extends AddColumn {
 	}
 
 	@Override
-	public void addColumn() {
-
-		final AbstractColumn abstractColumn = getBuilder()
+	public AbstractColumn getColumn() {
+		return getBuilder()
 						.setCustomExpression(new CustomExpressionForList(
 										getDataColumn().getProperty(),
 										getDataColumn().getColumnReport().whenNoData()))
 						.build();
-
-		getFastReportBuilder().addColumn(abstractColumn);
 	}
 }
