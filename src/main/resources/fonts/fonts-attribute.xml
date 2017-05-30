@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<fontFamilies>
+    <fontFamily name="Arial">
+        <!-- Normal Arial Font -->
+        <normal><![CDATA[fonts/arial.ttf]]></normal>
+        <!-- Bold Arial Font -->
+        <bold><![CDATA[fonts/arialbd.ttf]]></bold>
+        <!-- Italic Arial Font -->
+        <italic><![CDATA[fonts/ariali.ttf]]></italic>
+        <!-- Bolt italic Arial Font -->
+        <boldItalic><![CDATA[fonts/arialbi.ttf]]></boldItalic>
+        <!-- Is font is embedded in PDF -->
+        <pdfEmbedded><![CDATA[true]]></pdfEmbedded>
+    </fontFamily>
+</fontFamilies>
