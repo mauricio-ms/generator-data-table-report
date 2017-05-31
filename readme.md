@@ -29,7 +29,7 @@
 </dependency>
 ```
 
-# Hot to create a report
+# How to create a report
 
 ## Use annotation in some model to define which columns will be displayed in report
 
